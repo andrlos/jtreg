@@ -334,6 +334,28 @@ public class RegressionScript extends Script {
         return status;
     } // run()
 
+    @Override
+    protected void fillTestExecutionStatus(TestResult testResultToFill, Status execStatus) {
+        //testResultToFill.setStatus(new Status(Status.PASSED, "Just a regular failure."));
+        Status fillStatus = execStatus;
+        try {
+            TestDescription td = testResultToFill.getDescription();
+            if(execStatus.getType() == Status.FAILED && ! this.didCrash(td)){
+                fillStatus = new Status(Status.PASSED, "Just a regular failure.");
+            }
+        }
+        catch(TestResult.Fault f){
+            fillStatus =new Status(Status.ERROR, "Invalid state during testing. - test description missin.");
+        }
+        testResultToFill.setStatus(fillStatus);
+    }
+
+    private boolean didCrash(TestDescription td){
+        Pattern pattern = Pattern.compile("^hs_err_pid(\\d+)\\.log");
+        List<String> hs_errs = Arrays.stream(td.getDir().list()).filter(pattern.asPredicate()).collect(Collectors.toList());
+        return !hs_errs.isEmpty();
+    }
+
     private void printJDKInfo(PrintWriter pw, String label, JDK jdk, List<String> opts) {
         pw.print(label);
         pw.print(": ");
