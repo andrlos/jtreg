@@ -275,6 +275,7 @@ public class RegressionScript extends Script {
                         break;
                 }
             }
+            status = crashOnlyFail(td, status);
         } catch (InterruptedException e) {
             status = error("Interrupted! " + e.getLocalizedMessage());
         } catch (ScratchDirectory.Fault e) {
@@ -333,6 +334,20 @@ public class RegressionScript extends Script {
         }
         return status;
     } // run()
+
+    private Status crashOnlyFail(TestDescription td, Status status){
+        Status newStatus = status;
+        if(status.getType() == Status.FAILED && ! this.didCrash(td)){
+            newStatus = new Status(Status.PASSED, "Just a regular failure. Modified by crashonly code.");
+        }
+        return newStatus;
+    }
+
+    private boolean didCrash(TestDescription td){
+        Pattern pattern = Pattern.compile("^hs_err_pid(\\d+)\\.log");
+        List<String> hs_errs = Arrays.stream(td.getDir().list()).filter(pattern.asPredicate()).collect(Collectors.toList());
+        return !hs_errs.isEmpty();
+    }
 
     private void printJDKInfo(PrintWriter pw, String label, JDK jdk, List<String> opts) {
         pw.print(label);
