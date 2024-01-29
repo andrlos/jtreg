@@ -181,8 +181,9 @@ public class XMLWriter {
 
     private String getOutput(String name) throws TestResult.Fault {
         String[] titles = tr.getSectionTitles();
+        //we are looking for either a "main" section or "shell" section in jtr log
         for (int i = 0; i < titles.length; i++) {
-            if (titles[i].equals("main")) {
+            if (titles[i].equals("main") || titles[i].equals("shell")) {
                 Section s = tr.getSection(i);
                 for (String x : s.getOutputNames()) {
                     return s.getOutput(name);
