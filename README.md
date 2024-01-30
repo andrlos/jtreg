@@ -200,3 +200,7 @@ The https://github.com/openjdk/jtreg/commit/71838a66cbb8f1ab28844317b97e4fbb0273
 This is meant to be used with debug jvm testing.
 6.1 is intended for jdk8 and as such should be built on this version.
 A string notifying about changed result is in explanation of every testresult that has been changed by this piece of code: "Just a regular failure. Modified by crashonly code."
+
+Built by:
+
+`sh make/build.sh`
