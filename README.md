@@ -27,3 +27,7 @@ without leaving their IDE environment.  For more details, see the file
 ## crashonly
 
 The [https://github.com/openjdk/jtreg/commit/71838a66cbb8f1ab28844317b97e4fbb02730c42](https://github.com/openjdk/jtreg/compare/master...andrlos:jtreg:jtregCrashOnly) enhances the code with crashonly feature that only admits failures when jvm crashes.. This is meant to be used with debug jvm testing. 7.3 is intended for jdk11 and above and as such should be built on jdk11. A string notifying about changed result is in explanation of every testresult that has been changed by this piece of code: "Just a regular failure. Modified by crashonly code."
+
+Built by:
+
+`sh make/build.sh`
