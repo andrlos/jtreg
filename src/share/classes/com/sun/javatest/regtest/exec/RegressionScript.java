@@ -329,7 +329,7 @@ public class RegressionScript extends Script {
     } // run()
 
     @Override
-    protected void fillTestExecutionStatus(TestResult testResultToFill, Status execStatus) {
+    protected void setTestResultStatus(TestResult testResultToFill, Status execStatus) {
         //testResultToFill.setStatus(new Status(Status.PASSED, "Just a regular failure."));
         Status fillStatus = execStatus;
         try {
